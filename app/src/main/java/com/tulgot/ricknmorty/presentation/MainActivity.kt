@@ -26,15 +26,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             RicknMortyTheme {
-                List()
-                getcharacterlist()
+                CharacterListScreen()
             }
         }
 
-
-    }
-    @Composable
-    fun List(){
 
     }
 }
