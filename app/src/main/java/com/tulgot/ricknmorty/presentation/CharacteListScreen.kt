@@ -2,6 +2,7 @@ package com.tulgot.ricknmorty.presentation
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
@@ -15,15 +16,21 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun CharacterListScreen( mainviewmodel: MainViewModel = hiltViewModel()){
+fun CharacterListScreen( mainViewModel: MainViewModel = hiltViewModel() ){
 
 
 //    val characterlist = GlobalScope.launch{
 //        mainviewmodel.getcharacterlist()
 //    }
 //
-    val result = mainviewmodel.characterList.toString()
-    Log.d("tulgot: ", result)
+
+//    val mainViewModel = hiltViewModel<MainViewModel>()
+//
+//    Log.d("trafalgar: ", mainViewModel.toString())
+
+    val characterlist = mainViewModel
+    Text(text = characterlist.toString())
+
 
 
 }
