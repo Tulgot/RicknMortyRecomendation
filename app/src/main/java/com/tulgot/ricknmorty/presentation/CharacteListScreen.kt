@@ -10,17 +10,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.tulgot.ricknmorty.domain.model.Response
-import kotlinx.coroutines.flow.collect
-
+import com.tulgot.ricknmorty.presentation.MainState
 
 @Composable
-fun CharacterListScreen (MainViewModel: MainViewModel = hiltViewModel()){
+fun CharacterListScreen (){
+// fun CharacterListScreen (MainViewModel: MainViewModel = hiltViewModel()){
+//    LaunchedEffect(key1 = true){
+//        MainViewModel.fetchcharactelist()
+//    }
+//
+//
+//    val characters by MainViewModel.characterlist.collectAsState()
+// }
 
-    LaunchedEffect(key1 = true){
-        MainViewModel.fetchcharactelist()
+
+    val mainViewModel = hiltViewModel<MainViewModel>()
+    val mainstate by mainViewModel.characterlist.collectAsState()
+
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+        Text(text = mainstate.characterList.toString() )
     }
-
-    val characters by MainViewModel.characterlist.collectAsState()
-
 }
