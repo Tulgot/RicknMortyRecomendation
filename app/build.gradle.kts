@@ -73,10 +73,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Dagger - Hilt
-//    implementation("com.google.dagger:hilt-android:2.49")
-//    kapt("com.google.dagger:hilt-compiler:2.44")
-//    kapt("androidx.hilt:hilt-compiler:1.2.0")
-//    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("com.google.dagger:hilt-android:2.52")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     kapt  ("com.google.dagger:hilt-compiler:2.52")

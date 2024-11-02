@@ -1,36 +1,26 @@
 package com.tulgot.ricknmorty.presentation
 
-import android.annotation.SuppressLint
-import android.util.Log
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.tulgot.ricknmorty.data.RicknMortyApi
-import com.tulgot.ricknmorty.data.RicknMortyRepositoryImp
-import com.tulgot.ricknmorty.di.ApiModule
 import com.tulgot.ricknmorty.domain.model.Response
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
+
 
 @Composable
-fun CharacterListScreen( mainViewModel: MainViewModel = hiltViewModel() ){
+fun CharacterListScreen (MainViewModel: MainViewModel = hiltViewModel()){
 
+    LaunchedEffect(key1 = true){
+        MainViewModel.fetchcharactelist()
+    }
 
-//    val characterlist = GlobalScope.launch{
-//        mainviewmodel.getcharacterlist()
-//    }
-//
-
-//    val mainViewModel = hiltViewModel<MainViewModel>()
-//
-//    Log.d("trafalgar: ", mainViewModel.toString())
-
-    val characterlist = mainViewModel
-    Text(text = characterlist.toString())
-
-
+    val characters by MainViewModel.characterlist.collectAsState()
 
 }

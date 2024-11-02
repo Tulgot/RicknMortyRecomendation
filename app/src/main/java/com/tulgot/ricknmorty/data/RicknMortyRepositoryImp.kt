@@ -1,30 +1,37 @@
 package com.tulgot.ricknmorty.data
 
-import com.tulgot.ricknmorty.domain.CharacterListRepository
+import android.util.Log
+import com.tulgot.ricknmorty.data.response.ResponseDto
+import com.tulgot.ricknmorty.domain.RicknMortyRepository
 import com.tulgot.ricknmorty.domain.model.Response
+import com.tulgot.ricknmorty.domain.model.Result
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
-import retrofit2.HttpException
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class RicknMortyRepositoryImp @Inject constructor (private val ricknmortyapi : RicknMortyApi) : CharacterListRepository{
 
-//     suspend fun getCharacterList() : Flow<Response> {
-//         return flow {
-//             ricknmortyapi.getCharacters().toResponse()
-//         }
-//     }
+class RicknMortyRepositoryImp @Inject constructor (
+    val ricknmortyapi : RicknMortyApi
+) : RicknMortyRepository{
 
-//    suspend fun getCharacterList():Response{
-//        return ricknmortyapi.getCharacters().toResponse()  remoteWordResultDto
-//    }
+     /*suspend fun getCharacterList() : Flow<Response> {
+         return flow {
+             ricknmortyapi.getCharacters().toResponse()
+         }
+     }
 
-    override suspend fun getCharacterList(): Flow<Response> {
-        return flow {
-                ricknmortyapi.getCharacters().toResponse()
-        }
+    suspend fun getCharacterList():Response{
+        return ricknmortyapi.getCharacters().toResponse()  remoteWordResultDto
+    }*/
+
+    override suspend fun getCharacterList(): Response{
+
+        var characterlist = ricknmortyapi.getCharacters().toResponse()
+        return characterlist
     }
+
 }
 
