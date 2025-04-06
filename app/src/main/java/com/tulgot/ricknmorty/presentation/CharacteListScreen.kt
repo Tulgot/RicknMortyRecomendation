@@ -22,7 +22,6 @@ fun CharacterListScreen(
 ) {
 
     val context = LocalContext.current
-
     val characterStateResult by mainViewModel.characterList.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
