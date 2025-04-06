@@ -5,6 +5,9 @@ import com.tulgot.ricknmorty.data.response.ResultDto
 import com.tulgot.ricknmorty.domain.model.Response
 import com.tulgot.ricknmorty.domain.model.Result
 
+/**
+ * Esto es un mapper
+ */
 fun ResponseDto.toResponse() = Response(
     results = results.map {
         it.toResult()

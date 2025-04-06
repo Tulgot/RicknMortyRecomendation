@@ -1,53 +1,55 @@
 package com.tulgot.ricknmorty.presentation
 
-import androidx.lifecycle.ViewModel
+import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.tulgot.ricknmorty.domain.BaseViewModel
 import com.tulgot.ricknmorty.domain.RicknMortyRepository
-import com.tulgot.ricknmorty.domain.model.Response
+import com.tulgot.ricknmorty.domain.network.UiStates
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import javax.inject.Inject
-import com.tulgot.ricknmorty.presentation.MainState
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(val api: RicknMortyRepository) :
-    ViewModel() {
-
-//        private var _characterlist = MutableStateFlow<Response?>(null)
-//        val characterlist = _characterlist.asStateFlow()
-//
-//        fun fetchcharactelist(){
-//            viewModelScope.launch {
-//            _characterlist.update {api.getCharacterList()}
-//            }
-//        }
+class MainViewModel @Inject constructor(private val rickNMortyRepository: RicknMortyRepository) : BaseViewModel() {
 
 
+    private var _characterList = MutableStateFlow(MainState())
 
-    private var _characterlist = MutableStateFlow(MainState())
-    val characterlist = _characterlist.asStateFlow()
+    val characterList = _characterList.asStateFlow()
 
     init {
-        viewModelScope.launch{
-            loadCharacterList()
-        }
+        loadCharacterList()
     }
 
-    fun loadCharacterList(){
-        viewModelScope.launch {
-            api.getCharacterList().collect(){Response ->
-                _characterlist.update {
-                    it.copy(characterList = Response)
-                }
+    private fun loadCharacterList() {
+        executeFlow {
+            _characterList.update {
+                it.copy(
+                    state = UiStates.LOADING
+                )
             }
+            rickNMortyRepository.getCharacterList()
+                .catch { cause ->
+                    Log.e(this::class.simpleName, cause.toString())
+                    _characterList.update {
+                        it.copy(
+                            characterList = null,
+                            state = UiStates.FAILURE
+                        )
+                    }
+                }
+                .collect { response ->
+                    _characterList.update {
+                        it.copy(
+                            characterList = response,
+                            state = UiStates.SUCCESS
+                        )
+                    }
+                }
         }
     }
-
-
-
 }
