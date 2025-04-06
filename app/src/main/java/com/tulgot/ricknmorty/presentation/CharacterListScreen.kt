@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tulgot.ricknmorty.domain.network.UiStates
+import com.tulgot.ricknmorty.domain.network.UiStates2
 
 @Preview(showBackground = true)
 @Composable
@@ -26,20 +27,20 @@ fun CharacterListScreen(
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when (characterStateResult.state) {
-            UiStates.SUCCESS -> {
+            UiStates2.SUCCESS -> {
                 Text(text = characterStateResult.characterList.toString())
             }
 
-            UiStates.FAILURE -> {
+            UiStates2.FAILURE -> {
                 Toast.makeText(context, "No hay datos", Toast.LENGTH_SHORT).show()
             }
 
-            UiStates.LOADING -> {
+            UiStates2.LOADING -> {
                 Log.i("DATA", "LOADING")
                 Toast.makeText(context, "Cargando", Toast.LENGTH_SHORT).show()
             }
 
-            UiStates.NONE -> {}
+            UiStates2.NONE -> {}
         }
 
     }
